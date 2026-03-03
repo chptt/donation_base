@@ -5,8 +5,7 @@ import { motion } from 'framer-motion'
 import { useWallet } from '@/contexts/WalletContext'
 import { ethers } from 'ethers'
 import Link from 'next/link'
-import Image from 'next/image'
-import { BarChart3, DollarSign, TrendingUp, Wallet, Eye, Download } from 'lucide-react'
+import { BarChart3, DollarSign, TrendingUp, Wallet, Eye, Download, Heart } from 'lucide-react'
 
 interface Campaign {
   tokenId: number
@@ -243,13 +242,9 @@ export default function Dashboard() {
                       <tr key={campaign.tokenId} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            <Image
-                              src={campaign.profileImageURL || '/placeholder-avatar.png'}
-                              alt={campaign.influencerName}
-                              width={40}
-                              height={40}
-                              className="rounded-full mr-3"
-                            />
+                            <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center mr-3">
+                              <Heart className="h-5 w-5 text-gray-600" />
+                            </div>
                             <div>
                               <div className="text-sm font-medium text-gray-900">
                                 {campaign.influencerName}

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { useWallet } from '@/contexts/WalletContext'
 import { ethers } from 'ethers'
 import Link from 'next/link'
-import Image from 'next/image'
 import { History, Heart, DollarSign, Calendar, Eye } from 'lucide-react'
 
 interface Contribution {
@@ -66,9 +65,8 @@ export default function Contributions() {
   }
 
   const calculateTotalContributions = () => {
-    return contributions.reduce((sum: number, contribution: any) => {
-      return sum + (Number(ethers.formatEther(contribution.donationAmount)) * ethPrice)
-    }, 0)
+    // Each contribution is $1, so just count the number of contributions
+    return contributions.length * 1.00
   }
 
   if (!isConnected) {
@@ -173,7 +171,9 @@ export default function Contributions() {
             <div className="divide-y divide-gray-200">
               {contributions.map((contribution) => {
                 const donationInETH = Number(ethers.formatEther(contribution.donationAmount))
-                const donationInUSD = donationInETH * ethPrice
+                // Since we're doing $1 donations (0.0003 ETH), we should display it as $1
+                // regardless of the actual ETH value
+                const donationInUSD = 1.00 // Fixed $1 per donation
 
                 return (
                   <motion.div
@@ -184,13 +184,9 @@ export default function Contributions() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <Image
-                          src={contribution.campaign.profileImageURL || '/placeholder-avatar.png'}
-                          alt={contribution.campaign.influencerName}
-                          width={50}
-                          height={50}
-                          className="rounded-full"
-                        />
+                        <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
+                          <Heart className="h-6 w-6 text-gray-600" />
+                        </div>
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">
                             {contribution.campaign.influencerName}
