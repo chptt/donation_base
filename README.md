@@ -26,7 +26,7 @@ A decentralized donation platform built with Next.js 14 and Solidity, featuring 
 - **Solidity ^0.8.20**
 - **OpenZeppelin** contracts (ERC721, ReentrancyGuard, Ownable)
 - **Chainlink Price Feeds** for ETH/USD conversion
-- **Sepolia Testnet** deployment
+- **Base Sepolia Testnet** deployment
 
 ## Project Structure
 
@@ -81,7 +81,7 @@ struct Campaign {
 ### Prerequisites
 - Node.js 18+ and npm/yarn
 - MetaMask browser extension
-- Sepolia testnet ETH for deployment and testing
+- Base Sepolia testnet ETH for deployment and testing
 
 ### 1. Clone and Install
 ```bash
@@ -98,7 +98,7 @@ cp .env.example .env.local
 Edit `.env.local`:
 ```
 NEXT_PUBLIC_CONTRACT_ADDRESS=your_deployed_contract_address
-NEXT_PUBLIC_SEPOLIA_CHAIN_ID=11155111
+NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID=84532
 ```
 
 ### 3. Smart Contract Deployment
@@ -108,14 +108,14 @@ NEXT_PUBLIC_SEPOLIA_CHAIN_ID=11155111
 2. Create new file: `DonationPlatform.sol`
 3. Copy contract code from `contracts/DonationPlatform.sol`
 4. Compile with Solidity ^0.8.20
-5. Deploy to Sepolia testnet:
+5. Deploy to Base Sepolia testnet:
    - Environment: "Injected Provider - MetaMask"
-   - Network: Sepolia
+   - Network: Base Sepolia
    - Deploy contract
 6. Copy deployed contract address to `.env.local`
 
 #### Contract Verification (Optional)
-1. Go to [Sepolia Etherscan](https://sepolia.etherscan.io/)
+1. Go to [Base Sepolia Basescan](https://sepolia.basescan.org/)
 2. Find your contract and click "Verify and Publish"
 3. Upload source code and verify
 
@@ -136,7 +136,7 @@ npm run build
 
 Set environment variables in your deployment platform:
 - `NEXT_PUBLIC_CONTRACT_ADDRESS`
-- `NEXT_PUBLIC_SEPOLIA_CHAIN_ID`
+- `NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID`
 
 ## Usage Guide
 
@@ -154,7 +154,7 @@ Set environment variables in your deployment platform:
    - Track donation progress
 
 ### For Donors
-1. **Connect Wallet**: Connect MetaMask to Sepolia testnet
+1. **Connect Wallet**: Connect MetaMask to Base Sepolia testnet
 2. **Browse Campaigns**: View active campaigns on home page
 3. **Donate**: 
    - Click on campaign to view details
@@ -184,8 +184,8 @@ Set environment variables in your deployment platform:
 
 ## Chainlink Integration
 
-The contract uses Chainlink's ETH/USD price feed on Sepolia:
-- **Address**: `0x694AA1769357215DE4FAC081bf1f309aDC325306`
+The contract uses Chainlink's ETH/USD price feed on Base Sepolia:
+- **Address**: `0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1`
 - **Decimals**: 8
 - **Update Frequency**: ~1 minute
 - **Deviation Threshold**: 0.5%
@@ -198,9 +198,9 @@ npm run dev
 ```
 
 ### Contract Testing
-1. Deploy to Sepolia testnet
+1. Deploy to Base Sepolia testnet
 2. Test all functions through frontend
-3. Verify transactions on Sepolia Etherscan
+3. Verify transactions on Base Sepolia Basescan
 
 ### Test Scenarios
 - Create campaigns with different charity types
@@ -215,17 +215,17 @@ npm run dev
 
 **MetaMask Connection Issues**
 - Ensure MetaMask is installed and unlocked
-- Switch to Sepolia testnet
+- Switch to Base Sepolia testnet
 - Check if site is connected in MetaMask
 
 **Transaction Failures**
-- Ensure sufficient Sepolia ETH for gas
+- Ensure sufficient Base Sepolia ETH for gas
 - Check contract address in environment variables
-- Verify network is Sepolia (Chain ID: 11155111)
+- Verify network is Base Sepolia (Chain ID: 84532)
 
 **Price Feed Issues**
 - Chainlink price feeds may have delays
-- Check Sepolia network status
+- Check Base Sepolia network status
 - Verify price feed contract address
 
 **Build Errors**

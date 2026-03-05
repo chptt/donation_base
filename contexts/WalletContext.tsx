@@ -18,7 +18,7 @@ interface WalletContextType {
 const WalletContext = createContext<WalletContextType | undefined>(undefined)
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ''
-const SEPOLIA_CHAIN_ID = process.env.NEXT_PUBLIC_SEPOLIA_CHAIN_ID || '11155111'
+const BASE_SEPOLIA_CHAIN_ID = process.env.NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID || '84532'
 
 const CONTRACT_ABI = [
   "function mintMyNFT(uint8 _charityType, uint256 _goalAmount, string memory _influencerName, string memory _profileImageURL) public returns (uint256)",
@@ -53,26 +53,26 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         const signer = await provider.getSigner()
         const account = await signer.getAddress()
         
-        // Switch to Sepolia if not already
+        // Switch to Base Sepolia if not already
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: `0x${parseInt(SEPOLIA_CHAIN_ID).toString(16)}` }],
+            params: [{ chainId: `0x${parseInt(BASE_SEPOLIA_CHAIN_ID).toString(16)}` }],
           })
         } catch (switchError: any) {
           if (switchError.code === 4902) {
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
               params: [{
-                chainId: `0x${parseInt(SEPOLIA_CHAIN_ID).toString(16)}`,
-                chainName: 'Sepolia Test Network',
+                chainId: `0x${parseInt(BASE_SEPOLIA_CHAIN_ID).toString(16)}`,
+                chainName: 'Base Sepolia',
                 nativeCurrency: {
                   name: 'ETH',
                   symbol: 'ETH',
                   decimals: 18
                 },
-                rpcUrls: ['https://sepolia.infura.io/v3/'],
-                blockExplorerUrls: ['https://sepolia.etherscan.io/']
+                rpcUrls: ['https://sepolia.base.org'],
+                blockExplorerUrls: ['https://sepolia.basescan.org']
               }]
             })
           }

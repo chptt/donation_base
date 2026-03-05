@@ -45,8 +45,8 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
     event Withdrawal(uint256 indexed tokenId, address indexed creator, uint256 amount);
     
     constructor() ERC721("DonationCampaign", "DONATE") Ownable(msg.sender) {
-        // Sepolia ETH/USD Price Feed
-        priceFeed = AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        // Base Sepolia ETH/USD Price Feed
+        priceFeed = AggregatorV3Interface(0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1);
     }
     
     function mintMyNFT(

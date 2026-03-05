@@ -5,8 +5,8 @@ This guide covers deploying the Donation Platform smart contract and frontend ap
 ## Smart Contract Deployment
 
 ### Prerequisites
-- MetaMask with Sepolia testnet configured
-- Sepolia ETH for deployment (get from [Sepolia Faucet](https://sepoliafaucet.com/))
+- MetaMask with Base Sepolia testnet configured
+- Base Sepolia ETH for deployment (get from [Base Sepolia Faucet](https://www.coinbase.com/faucets/base-ethereum-goerli-faucet) or bridge from Sepolia)
 - Access to [Remix IDE](https://remix.ethereum.org/)
 
 ### Step 1: Prepare Contract for Deployment
@@ -23,11 +23,11 @@ This guide covers deploying the Donation Platform smart contract and frontend ap
 3. Click "Compile DonationPlatform.sol"
 4. Ensure compilation succeeds without errors
 
-### Step 3: Deploy to Sepolia
+### Step 3: Deploy to Base Sepolia
 
 1. Go to "Deploy & Run Transactions" tab (third icon)
 2. Set Environment to "Injected Provider - MetaMask"
-3. Ensure MetaMask is connected to Sepolia testnet
+3. Ensure MetaMask is connected to Base Sepolia testnet
 4. Select "DonationPlatform" from the contract dropdown
 5. Click "Deploy"
 6. Confirm transaction in MetaMask
@@ -36,7 +36,7 @@ This guide covers deploying the Donation Platform smart contract and frontend ap
 
 ### Step 4: Verify Contract (Optional but Recommended)
 
-1. Go to [Sepolia Etherscan](https://sepolia.etherscan.io/)
+1. Go to [Base Sepolia Basescan](https://sepolia.basescan.org/)
 2. Search for your contract address
 3. Click "Contract" tab, then "Verify and Publish"
 4. Select:
@@ -54,7 +54,7 @@ Create `.env.local` file in project root:
 
 ```bash
 NEXT_PUBLIC_CONTRACT_ADDRESS=0x... # Your deployed contract address
-NEXT_PUBLIC_SEPOLIA_CHAIN_ID=11155111
+NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID=84532
 ```
 
 ### Step 2: Build and Test Locally
@@ -94,7 +94,7 @@ vercel
 4. Import your GitHub repository
 5. Configure environment variables:
    - `NEXT_PUBLIC_CONTRACT_ADDRESS`: Your contract address
-   - `NEXT_PUBLIC_SEPOLIA_CHAIN_ID`: `11155111`
+   - `NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID`: `84532`
 6. Click "Deploy"
 
 ### Step 4: Configure Custom Domain (Optional)
@@ -138,7 +138,7 @@ vercel
 ### Smart Contract Verification
 
 - [ ] Contract deployed successfully
-- [ ] Contract verified on Etherscan
+- [ ] Contract verified on Basescan
 - [ ] All functions working in Remix
 - [ ] Price feed returning valid data
 - [ ] Test mint, donate, and withdraw functions
@@ -155,7 +155,7 @@ vercel
 ### End-to-End Testing
 
 1. **Connect Wallet**
-   - Connect MetaMask to Sepolia
+   - Connect MetaMask to Base Sepolia
    - Verify wallet address displays correctly
 
 2. **Create Campaign**
@@ -179,7 +179,7 @@ vercel
 
 ### Contract Monitoring
 
-- Monitor contract on [Sepolia Etherscan](https://sepolia.etherscan.io/)
+- Monitor contract on [Base Sepolia Basescan](https://sepolia.basescan.org/)
 - Set up alerts for large transactions
 - Track gas usage and optimization opportunities
 
@@ -202,7 +202,7 @@ vercel
 
 **Issue**: Transaction reverts during deployment
 **Solution**: 
-- Ensure sufficient Sepolia ETH for gas
+- Ensure sufficient Base Sepolia ETH for gas
 - Check compiler version matches
 - Verify all imports are accessible
 
@@ -211,15 +211,15 @@ vercel
 **Issue**: "Contract not found" or connection errors
 **Solution**:
 - Verify contract address in environment variables
-- Ensure MetaMask is on Sepolia network
+- Ensure MetaMask is on Base Sepolia network
 - Check if contract is verified and accessible
 
 ### Price Feed Returns Zero
 
 **Issue**: ETH price shows as $0
 **Solution**:
-- Verify Chainlink price feed address
-- Check Sepolia network connectivity
+- Verify Chainlink price feed address for Base Sepolia
+- Check Base Sepolia network connectivity
 - Ensure price feed contract is active
 
 ### Transactions Fail
