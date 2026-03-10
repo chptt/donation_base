@@ -53,7 +53,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         const signer = await provider.getSigner()
         const account = await signer.getAddress()
         
-        // Switch to Base Sepolia if not already
         try {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
@@ -106,17 +105,13 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     if (contract) {
       try {
         const price = await contract.getLatestPrice()
-        const priceInUSD = Number(price) / 100000000 // Convert from 8 decimals
-        console.log('ETH Price from Chainlink:', priceInUSD)
+        const priceInUSD = Number(price) / 100000000
         setEthPrice(priceInUSD)
-        
-        // Set fixed ETH amount for $1 donation
         setRequiredETH("0.0003")
       } catch (error: any) {
-        console.error('Error fetching ETH price, using fallbacks:', error)
-        // Use fallback values
-        setEthPrice(3000) // Approximate ETH price
-        setRequiredETH("0.0003") // Fixed $1 worth of ETH
+        console.error('Error fetching ETH price:', error)
+        setEthPrice(3000)
+        setRequiredETH("0.0003")
       }
     }
   }
@@ -130,7 +125,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (contract) {
       fetchETHPrice()
-      const interval = setInterval(fetchETHPrice, 30000) // Update every 30 seconds
+      const interval = setInterval(fetchETHPrice, 30000)
       return () => clearInterval(interval)
     }
   }, [contract])

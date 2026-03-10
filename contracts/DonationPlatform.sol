@@ -23,8 +23,8 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
     struct Campaign {
         uint256 tokenId;
         CharityType charityType;
-        uint256 goalAmount; // in USD (with 18 decimals)
-        uint256 totalDonations; // in ETH (with 18 decimals)
+        uint256 goalAmount;
+        uint256 totalDonations;
         address creator;
         string influencerName;
         string profileImageURL;
@@ -34,18 +34,17 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
     
     mapping(uint256 => Campaign) public campaigns;
     mapping(address => uint256[]) public creatorCampaigns;
-    mapping(address => mapping(uint256 => uint256)) public userDonations; // user => tokenId => amount
-    mapping(address => uint256[]) public userContributions; // user => tokenIds donated to
+    mapping(address => mapping(uint256 => uint256)) public userDonations;
+    mapping(address => uint256[]) public userContributions;
     
     uint256 private _tokenIdCounter;
-    uint256 public constant DONATION_AMOUNT_USD = 10 * 10**18; // $10 in wei format
+    uint256 public constant DONATION_AMOUNT_USD = 10 * 10**18;
     
     event CampaignCreated(uint256 indexed tokenId, address indexed creator, CharityType charityType, uint256 goalAmount);
     event DonationMade(uint256 indexed tokenId, address indexed donor, uint256 amount);
     event Withdrawal(uint256 indexed tokenId, address indexed creator, uint256 amount);
     
     constructor() ERC721("DonationCampaign", "DONATE") Ownable(msg.sender) {
-        // Base Sepolia ETH/USD Price Feed
         priceFeed = AggregatorV3Interface(0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1);
     }
     
@@ -58,7 +57,6 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
         uint256 tokenId = _tokenIdCounter;
         _tokenIdCounter++;
         
-        // Use _mint instead of _safeMint to allow multiple campaigns per wallet
         _mint(msg.sender, tokenId);
         
         campaigns[tokenId] = Campaign({
@@ -86,7 +84,6 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
         campaigns[_tokenId].totalDonations += msg.value;
         userDonations[msg.sender][_tokenId] += msg.value;
         
-        // Add to user contributions if first donation to this campaign
         if (userDonations[msg.sender][_tokenId] == msg.value) {
             userContributions[msg.sender].push(_tokenId);
         }
@@ -116,14 +113,13 @@ contract DonationPlatform is ERC721, ReentrancyGuard, Ownable {
         int256 price = getLatestPrice();
         require(price > 0, "Invalid price");
         
-        // Convert USD to ETH: (USD amount * 10^18) / (price * 10^8) * 10^18
         uint256 ethAmount = (DONATION_AMOUNT_USD * 10**8) / uint256(price);
         return ethAmount;
     }
     
     function getLatestPrice() public view returns (int256) {
         (, int256 price, , , ) = priceFeed.latestRoundData();
-        return price; // Price has 8 decimals
+        return price;
     }
     
     function getAllCampaigns() public view returns (Campaign[] memory) {

@@ -1,54 +1,41 @@
-# Donation Platform - Blockchain-Powered Fundraising
+# Donation Platform
 
-A decentralized donation platform built with Next.js 14 and Solidity, featuring NFT-based campaigns with Chainlink price feeds for USD-stabilized donations.
+A decentralized donation platform built with Next.js 14 and Solidity, featuring NFT-based campaigns with Chainlink price feeds.
 
 ## Features
 
-- **NFT Campaigns**: Each fundraising campaign is represented as an ERC721 NFT
-- **USD-Stabilized Donations**: Fixed $10 donations automatically converted to ETH using Chainlink price feeds
-- **Multiple Campaign Types**: Housing, Meals, Medical, Education, Equipment, River Cleaning
-- **Real-time Price Updates**: ETH/USD conversion updates every 30 seconds
-- **Transparent Tracking**: All donations and withdrawals are recorded on-chain
-- **Responsive Design**: Beautiful UI with Tailwind CSS and Framer Motion animations
-- **MetaMask Integration**: Seamless wallet connection with ethers.js v6
+- NFT-based fundraising campaigns
+- USD-stabilized donations using Chainlink price feeds
+- Multiple campaign types: Housing, Meals, Medical, Education, Equipment, River Cleaning
+- Real-time ETH/USD conversion
+- MetaMask integration
 
 ## Tech Stack
 
-### Frontend
-- **Next.js 14** with App Router
-- **React 18** with TypeScript
-- **Tailwind CSS** for styling
-- **Framer Motion** for animations
-- **ethers.js v6** for blockchain interaction
-- **Lucide React** for icons
+- Next.js 14 with TypeScript
+- Solidity ^0.8.20
+- OpenZeppelin contracts
+- Chainlink Price Feeds
+- Base Sepolia Testnet
+- Tailwind CSS
+- ethers.js v6
 
-### Smart Contract
-- **Solidity ^0.8.20**
-- **OpenZeppelin** contracts (ERC721, ReentrancyGuard, Ownable)
-- **Chainlink Price Feeds** for ETH/USD conversion
-- **Base Sepolia Testnet** deployment
+## Setup
 
-## Project Structure
-
+```bash
+npm install
 ```
-donation-platform/
-├── app/                          # Next.js App Router pages
-│   ├── campaign/[id]/           # Individual campaign pages
-│   ├── contributions/           # User donation history
-│   ├── create/                  # Campaign creation form
-│   ├── dashboard/               # Creator dashboard
-│   ├── globals.css              # Global styles
-│   ├── layout.tsx               # Root layout
-│   └── page.tsx                 # Home page
-├── components/                   # Reusable React components
-│   ├── CampaignCard.tsx         # Campaign display card
-│   └── Navbar.tsx               # Navigation component
-├── contexts/                     # React contexts
-│   └── WalletContext.tsx        # Wallet connection state
-├── contracts/                    # Solidity smart contracts
-│   └── DonationPlatform.sol     # Main contract
-├── public/                       # Static assets
-└── package.json                 # Dependencies and scripts
+
+Configure `.env.local`:
+```
+NEXT_PUBLIC_CONTRACT_ADDRESS=your_contract_address
+NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID=84532
+```
+
+Run development server:
+```bash
+npm run dev
+```└── package.json                 # Dependencies and scripts
 ```
 
 ## Smart Contract Functions
@@ -61,57 +48,18 @@ donation-platform/
 - `viewRequiredETH()` - Get current ETH amount for $10 donation
 - `getLatestPrice()` - Get current ETH/USD price from Chainlink
 
-### Campaign Data Structure
-```solidity
-struct Campaign {
-    uint256 tokenId;
-    CharityType charityType;
-    uint256 goalAmount;        // in USD (18 decimals)
-    uint256 totalDonations;    // in ETH (18 decimals)
-    address creator;
-    string influencerName;
-    string profileImageURL;
-    bool active;
-    uint256 createdAt;
-}
-```
+## Deployment
 
-## Setup Instructions
-
-### Prerequisites
-- Node.js 18+ and npm/yarn
-- MetaMask browser extension
-- Base Sepolia testnet ETH for deployment and testing
-
-### 1. Clone and Install
-```bash
-git clone <repository-url>
-cd donation-platform
-npm install
-```
-
-### 2. Environment Configuration
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local`:
-```
-NEXT_PUBLIC_CONTRACT_ADDRESS=your_deployed_contract_address
-NEXT_PUBLIC_BASE_SEPOLIA_CHAIN_ID=84532
-```
-
-### 3. Smart Contract Deployment
-
-#### Using Remix IDE (Recommended)
+Deploy the smart contract using Remix IDE:
 1. Open [Remix IDE](https://remix.ethereum.org/)
-2. Create new file: `DonationPlatform.sol`
-3. Copy contract code from `contracts/DonationPlatform.sol`
-4. Compile with Solidity ^0.8.20
-5. Deploy to Base Sepolia testnet:
-   - Environment: "Injected Provider - MetaMask"
-   - Network: Base Sepolia
-   - Deploy contract
+2. Create `DonationPlatform.sol` and paste contract code
+3. Compile with Solidity ^0.8.20
+4. Deploy to Base Sepolia using MetaMask
+5. Copy contract address to `.env.local`
+
+## License
+
+MIT   - Deploy contract
 6. Copy deployed contract address to `.env.local`
 
 #### Contract Verification (Optional)
